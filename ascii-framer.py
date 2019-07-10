@@ -1,6 +1,8 @@
 #!/usr/env/python
 
 import sys
+import os
+from stat import S_ISFIFO
 
 char = '║'
 hchar = '═'
@@ -24,10 +26,12 @@ def argparse():
 		print('ARGUMENT ERROR, shit is happening!')
 		
 def get_stdin():
-	for line in sys.stdin:
-		line = line.replace('\n', '')
-		line = line.replace('	', '    ')
-		stdincontent.append(line)
+	#check if programm is being piped
+	if S_ISFIFO(os.fstat(0).st_mode):
+		for line in sys.stdin:
+			line = line.replace('\n', '')
+			line = line.replace('	', '    ')
+			stdincontent.append(line)
 
 def maxlinelencalc():
 	global maxlinelen

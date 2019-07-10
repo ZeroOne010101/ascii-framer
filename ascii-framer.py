@@ -30,7 +30,7 @@ def get_stdin():
 	if S_ISFIFO(os.fstat(0).st_mode):
 		for line in sys.stdin:
 			line = line.replace('\n', '')
-			line = line.replace('	', '    ')
+			line = line.replace('	', '')
 			stdincontent.append(line)
 
 def maxlinelencalc():

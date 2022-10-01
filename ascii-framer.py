@@ -35,7 +35,7 @@ def get_stdin():
 			line = line.replace('	', '')
 			stdincontent.append(line)
 	else:
-		print("Nothing to display")
+		print(r'Nothing to display: pipe "|" is missing')
 
 def maxlinelencalc():
 	# Calculate longest string

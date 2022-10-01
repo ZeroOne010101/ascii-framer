@@ -1,7 +1,6 @@
-#!/usr/env/python
-
 import sys
 import os
+import argparse
 from stat import S_ISFIFO
 
 # Global Variables
@@ -12,22 +11,20 @@ maxlinelen=0
 
 stdincontent = []
 
+# Setup Argument parser
+parser = argparse.ArgumentParser(usage='command | ascii-framer.py [options]', 
+		description='This program transforms string input from the commandline to include a nice ascii frame')
+parser.add_argument('-c', nargs=1, metavar='value', help='Set a value as the horizonal char')
+args = parser.parse_args()
+
 def argparse():
 	"""Parse piped arguments"""
-	global char
-	# Exit if there is no arguments
-	if len(sys.argv) == 1:
-		return
-	# set the horizonal char with the -c switch
-	if len(sys.argv) == 3:
-		if sys.argv[1] == '-c':
-			char =	sys.argv[2]
-	elif len(sys.argv) == 2:
-		print('ERROR: not enough arguments given!')
-	elif len(sys.argv) > 3:
-		print('ERROR: too many arguments given!')
-	else:
-		print('ARGUMENT ERROR, shit is happening!')
+	global char, args
+
+	# set the horizonal char with the -c argument
+	if args.c:
+		char = args.c[0]
+
 		
 def get_stdin():
 	"""Populate stdinconent list"""
@@ -37,6 +34,8 @@ def get_stdin():
 			line = line.replace('\n', '')
 			line = line.replace('	', '')
 			stdincontent.append(line)
+	else:
+		print("Nothing to display")
 
 def maxlinelencalc():
 	# Calculate longest string
